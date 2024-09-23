@@ -33,8 +33,7 @@
 </head>
 <body>
     <h1>試合までのカウントダウン</h1>
-    <h1>指定の日までの日数カウントダウン</h1>
-    <p>指定された日まであと <span id="days-left"></span> 日です。</p>
+    <p>次の試合まであと <span id="days-left"></span> 日</p>
 
     <script>
         function displayCountdown(targetDate, elementId) {
@@ -49,8 +48,7 @@
             const countdownElement = document.getElementById(elementId);
             countdownElement.textContent = daysLeft >= 0 ? daysLeft : 0;
         }
-
-        // 指定された日付（YYYY-MM-DD形式で指定）
+        
         const targetDate = '2025-04-27';
 
         // カウントダウンの表示を更新
@@ -74,7 +72,7 @@
 
     <script>
         // Google Sheets APIキー
-        const API_KEY = 'AIzaSyBHPhVmL9KOHmR9t9yKOByKWxcmr7ePdBs';
+        const API_KEY = 'APIキーの入力';
         
         // スプレッドシートID
         const SPREADSHEET_ID = '1-DNSI24XPTBdtehD-W8Apo8xnOeDAF6xMfy5muO1WWQ';
