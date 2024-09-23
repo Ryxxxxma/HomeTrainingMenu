@@ -33,12 +33,28 @@
 </head>
 <body>
     <h1>試合までのカウントダウン</h1>
-    <p><b>次の大会まで: <span id="days-left"></span></b></p>
+    <h1>指定の日までの日数カウントダウン</h1>
+    <p>指定された日まであと <span id="days-left"></span> 日です。</p>
 
-    <!-- 外部のJavaScriptファイルを読み込む -->
-    <script src="MatchCountDown.js" defer></script>
-     <script>
-       displayCountdown('2025-4-27', 'days-left');
+    <script>
+        function displayCountdown(targetDate, elementId) {
+            const currentDate = new Date(); // 現在の日付
+            const eventDate = new Date(targetDate); // 指定された日付
+            
+            // 日付の差を計算（ミリ秒単位なので、日数に変換）
+            const timeDifference = eventDate - currentDate;
+            const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // ミリ秒 → 秒 → 分 → 時間 → 日
+            
+            // 結果をHTMLに表示
+            const countdownElement = document.getElementById(elementId);
+            countdownElement.textContent = daysLeft >= 0 ? daysLeft : 0;
+        }
+
+        // 指定された日付（YYYY-MM-DD形式で指定）
+        const targetDate = '2025-04-27';
+
+        // カウントダウンの表示を更新
+        displayCountdown(targetDate, 'days-left');
     </script>
     
     <h1>本日のメニュー</h1>
@@ -64,7 +80,7 @@
         const SPREADSHEET_ID = '1-DNSI24XPTBdtehD-W8Apo8xnOeDAF6xMfy5muO1WWQ';
 
         // シート名（またはシート番号）
-        const RANGE = '9月練習メニュー!H1:H3'; // 表示したい範囲を指定
+        const RANGE = '9月練習メニュー!B1:J9'; // 表示したい範囲を指定
 
         // Google Sheets API URL
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
