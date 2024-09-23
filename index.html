@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ページタイトル</title>
+    <script src="MatchCountDown.js"></script>
+    <style>
+        /* テーブル全体に線を引く */
+        table {
+            border-collapse: collapse; /* セルの間の隙間をなくす */
+            width: 100%; /* テーブルの幅 */
+            margin: 20px 0; /* テーブルの上と下に余白を追加 */
+        }
+
+        /* テーブルのセルに線を引く */
+        table, th, td {
+            border: 1px solid black; /* 線の太さと色を指定 */
+        }
+
+        /* ヘッダーセルにスタイルを追加 */
+        th {
+            background-color: #f2f2f2; /* ヘッダーの背景色 */
+            padding: 10px; /* セル内の余白 */
+        }
+
+        /* 通常のセルにスタイルを追加 */
+        td {
+            padding: 10px; /* セル内の余白 */
+            text-align: center; /* 左揃え */
+        }
+    </style>
+</head>
+<body>
+    <h1>試合までのカウントダウン</h1>
+    <p><b>極真館全日本までの日数: <span id="days-left"></span></b></p>
+
+    <!-- 外部のJavaScriptファイルを読み込む -->
+    <script src="MatchCountDown.js" defer></script>
+     <script>
+       displayCountdown('2025-4-27', 'days-left');
+    </script>
+    
+    <h1>本日のメニュー</h1>
+    <p>本日のメニューはこちら</p>
+
+    <!-- テーブルを別の見出しにまとめる -->
+    <h2>トレーニングメニュー</h2>
+    <table id="data-table" border="1">
+        <tbody>
+            <tr>
+                <th>メニュー名</th>
+                <td>rep 数</td>
+                <td>セット数</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Google Sheets APIキー
+        const API_KEY = 'AIzaSyBHPhVmL9KOHmR9t9yKOByKWxcmr7ePdBs';
+        
+        // スプレッドシートID
+        const SPREADSHEET_ID = '1-DNSI24XPTBdtehD-W8Apo8xnOeDAF6xMfy5muO1WWQ';
+
+        // シート名（またはシート番号）
+        const RANGE = '9月練習メニュー!H1:H3'; // 表示したい範囲を指定
+
+        // Google Sheets API URL
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+
+        // データを取得して表に表示する関数
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#data-table tbody');
+                const rows = data.values;
+                rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.forEach(cell => {
+                        const td = document.createElement('td');
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+
+    <h1>練習メニュー一覧</h1>
+    <p>他の日の練習メニューはこちらから</p>
+    <a href="AllTrainig.html">全ての日の練習メニュー</a>
+</body>
+</html>
